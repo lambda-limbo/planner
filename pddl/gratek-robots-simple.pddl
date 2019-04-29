@@ -2,8 +2,15 @@
 (:domain gratek-robots)
 
     (:objects
-        r0
-        r1 - robot
+        r0 - robot
+
+        small
+        medium
+        big - size
+
+        book
+        electronic 
+        cleansing - category
         
         p0
         p1 
@@ -28,8 +35,36 @@
     (:init
         ;; Robots location
         (at r0 l0)
-        (at r1 l0)
         
+        ;; Defining packages and shelfs size
+        (is-size p0 small)
+        (is-size p1 small)
+        (is-size p2 small)
+
+        (is-size p3 medium)
+        (is-size p4 big)
+
+        (is-size s0 small)
+        (is-size s1 small)
+        (is-size s2 medium)
+        (is-size s3 medium)
+        (is-size s4 big)
+        (is-size s5 big)
+
+        ;; Defining packages and shelfs categories
+        (is-category p0 electronic)
+        (is-category p1 electronic)
+        (is-category p2 book)
+        (is-category p3 cleansing)
+        (is-category p4 cleansing)
+
+        (is-category s0 electronic)
+        (is-category s1 electronic)
+        (is-category s2 book)
+        (is-category s3 cleansing)
+        (is-category s4 book)
+        (is-category s5 book)
+
         ;; Packages location
         (at p0 l1)
         (at p1 l1)
@@ -57,10 +92,8 @@
     )
     
     (:goal (and 
-                (holding r0 p0)
-                (holding r1 p1)
-                (at r0 l4)
-                (at r1 l4)
+                (in-place p0 s0)
+                (in-place p1 s1)
             )
     )
 )
