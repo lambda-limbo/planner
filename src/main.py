@@ -1,4 +1,7 @@
+#!/usr/bin/python3
+
 import sys
+
 
 def main():
     arguments = sys.argv
