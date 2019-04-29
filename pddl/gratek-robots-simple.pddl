@@ -4,6 +4,8 @@
     (:objects
         r0 - robot
 
+        c0 - charge
+
         small
         medium
         big - size
@@ -30,11 +32,22 @@
         l2            ;; small shelfs location
         l3            ;; medium shelfs location
         l4 - location ;; big shelfs location
+
+        lc - location ;; recharge location
     )
     
     (:init
+        ;; Problem global constants
+        (= (total-cost) 0)
+
         ;; Robots location
-        (at r0 l0)
+        (at r0 l0) 
+
+        ;; Defining properties of the charge point
+        (at c0 lc)
+
+        ;; Robots battery level
+        (= (battery-level r0) 15)
         
         ;; Defining packages and shelfs size
         (is-size p0 small)
@@ -93,7 +106,8 @@
     
     (:goal (and 
                 (in-place p0 s0)
-                (in-place p1 s1)
+                (in-place p1 s0)
+                (in-place p3 s3)
             )
     )
 )

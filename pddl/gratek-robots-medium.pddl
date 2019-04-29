@@ -2,14 +2,26 @@
 (:domain gratek-robots)
 
     (:objects
-        r0
-        r1 - robot
+        r0 - robot
+
+        c0 - charge
+
+        small
+        medium
+        big - size
+
+        book
+        electronic 
+        cleansing - category
         
         p0
         p1 
         p2 
         p3 
-        p4 - package
+        p4
+        p5
+        p6
+        p7 - package
         
         s0 
         s1 
@@ -23,19 +35,67 @@
         l2            ;; small shelfs location
         l3            ;; medium shelfs location
         l4 - location ;; big shelfs location
+
+        lc - location ;; recharge location
     )
     
     (:init
+        ;; Problem global constants
+        (= (total-cost) 0)
+
         ;; Robots location
-        (at r0 l0)
-        (at r1 l0)
+        (at r0 l0) 
+
+        ;; Defining properties of the charge point
+        (at c0 lc)
+
+        ;; Robots battery level
+        (= (battery-level r0) 5)
         
+        ;; Defining packages and shelfs size
+        (is-size p0 small)
+        (is-size p1 small)
+        (is-size p2 small)
+        (is-size p5 small)
+        (is-size p6 small)
+        (is-size p7 small)
+
+        (is-size p3 medium)
+        (is-size p4 big)
+
+        (is-size s0 small)
+        (is-size s1 small)
+        (is-size s2 medium)
+        (is-size s3 medium)
+        (is-size s4 small)
+        (is-size s5 big)
+
+        ;; Defining packages and shelfs categories
+        (is-category p0 electronic)
+        (is-category p1 electronic)
+        (is-category p2 book)
+        (is-category p3 cleansing)
+        (is-category p4 cleansing)
+        (is-category p5 book)
+        (is-category p6 book)
+        (is-category p7 book)
+
+        (is-category s0 electronic)
+        (is-category s1 electronic)
+        (is-category s2 book)
+        (is-category s3 cleansing)
+        (is-category s4 book)
+        (is-category s5 book)
+
         ;; Packages location
         (at p0 l1)
         (at p1 l1)
         (at p2 l1)
         (at p3 l1)
         (at p4 l1)
+        (at p5 l1)
+        (at p6 l1)
+        (at p7 l1)
         
         ;; Small shelfs location
         (at s0 l2)
@@ -54,13 +114,18 @@
         (available p2)
         (available p3)
         (available p4)
+        (available p5)
+        (available p6)
+        (available p7)
     )
     
     (:goal (and 
-                (holding r0 p0)
-                (holding r1 p1)
-                (at r0 l4)
-                (at r1 l4)
+                (in-place p0 s0)
+                (in-place p1 s1)
+                (in-place p3 s3)
+                (in-place p5 s4)
+                (in-place p6 s4)
+                (in-place p7 s4)
             )
     )
 )

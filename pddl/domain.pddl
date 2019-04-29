@@ -7,9 +7,10 @@
 	    :negative-preconditions)
 	
 	(:types location 
-	        robot 
-	        package 
-	        shelf
+	        robot 		;; the robot
+	        package 	;; a package
+	        shelf 		;; a shelf
+			charge		;; a recharge point
 	        category	;; category of the packages and the shelf
 			size		;; size of the packages
 	)
@@ -27,13 +28,22 @@
 		(in-place ?p - package ?s - shelf) ;; is package ?p in place ?s
     )
 
+	(:functions
+		(total-cost)				- number ;; Total cost of the planning
+		(battery-level ?r - robot)	- number ;; The current battery level for a robot ?c
+		(placing-cost ?s - shelf)	- number ;; The cost of placing an item on the shelf ?s
+	)
+
 	;; Moves the robot ?r from the location ?x to location ?y
     (:action move
         :parameters (?r - robot ?x - location ?y - location)
         :precondition (and  (at ?r ?x)
-                            (not (at ?r ?y)))
+                            (not (at ?r ?y))
+							(> (battery-level ?r) 1))
         :effect (and (at ?r ?y)
-                     (not (at ?r ?x)))
+                     (not (at ?r ?x))
+					 (increase (total-cost) 1)
+					 (decrease (battery-level ?r) 1))
     )
 	
 	;; Pick up a package
@@ -42,10 +52,13 @@
 		:precondition (and (at ?p ?l)
  				           (at ?r ?l)
  				           (available ?p)
+						   (> (battery-level ?r) 2)
                            (forall (?r1 - robot)
                                 (not (holding ?r1 ?p))))
 		:effect (and (holding ?r ?p)
-		             (not (available ?p)))
+		             (not (available ?p))
+					 (increase (total-cost) 1)
+					 (decrease (battery-level ?r) 2))
 		
 	)
 
@@ -67,9 +80,12 @@
 						   (is-size ?p ?si) 
 						   (is-size ?s ?si)
 						   (is-category ?p ?c) 
-						   (is-category ?s ?c))
+						   (is-category ?s ?c)
+						   (> (battery-level ?r) 3))
 		:effect (and (not (holding ?r ?p))
-		             (in-place ?p ?s))
+		             (in-place ?p ?s)
+					 (increase (total-cost) 2)
+					 (decrease (battery-level ?r) 3))
 	)
 
 	;; Removes a package ?p from location ?l on the shelf ?s
@@ -83,4 +99,12 @@
                      (holding ?r ?p))
     )
 
+	;; Recharges a robot's battery
+	(:action recharge
+		:parameters (?r - robot ?c - charge ?l - location)
+		:precondition (and (at ?r ?l)
+						   (at ?c ?l))
+		:effect (and (increase (battery-level ?r) 10)
+					 (increase (total-cost) 3))
+	)
 )
