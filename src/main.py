@@ -2,6 +2,8 @@ import sys
 
 def main():
     arguments = sys.argv
+    # Is the output defined for a file?
+    output = False
 
     if len(arguments) == 1:
         usage()
@@ -11,7 +13,12 @@ def main():
         if a == "--help" or a == "-h":
             usage()
             break
-        elif a == "-d":
+        elif a == "-d" or a == "--domain":
+            break
+        elif a == "-p" or a == "--problem":
+            break
+        elif a == "-o" or a == "--output":
+            output = True
             break
         else:
             print("Command \"%s\" was not recognized.\n" % a)
