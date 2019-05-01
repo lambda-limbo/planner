@@ -1,31 +1,32 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 
-import sys
+import sys, getopt
 
-
-def main():
-    arguments = sys.argv
-    # Is the output defined for a file?
-    output = False
-
-    if len(arguments) == 1:
+def main(argv):
+    domain = ''
+    problem = ''
+    output = 'stdout'
+    try:
+        opts, args = getopt.getopt(argv,"hd:p:o:",["domain=","problem=","output="])
+    except getopt.GetoptError as error:
+        print("%s.\n" % str.capitalize(str(error)))
         usage()
-        exit(0)
-
-    for a in arguments[1:]:
-        if a == "--help" or a == "-h":
+        sys.exit(2)
+    for opt, arg in opts:
+        if opt == '-h':
             usage()
-            break
-        elif a == "-d" or a == "--domain":
-            break
-        elif a == "-p" or a == "--problem":
-            break
-        elif a == "-o" or a == "--output":
-            output = True
-            break
-        else:
-            print("Command \"%s\" was not recognized.\n" % a)
-            usage()
+            sys.exit()
+        elif opt in ("-d", "--domain"):
+            domain = arg
+        elif opt in ("-p", "--problem"):
+            problem = arg
+        elif opt in ("-o", "--output"):
+            output = arg
+    if(not domain and problem or domain and not problem or not opts):
+        print("A domain and a problem is required to execute.\n")
+        usage()
+        sys.exit()
+    # call for pddl parser with the given arguments
 
 def usage():
     print("Usage:\n")
@@ -35,6 +36,5 @@ def usage():
     print("\t-o --output <file>\t - \tDefines where to output the plan, " +
           "default is stdout")
 
-
 if __name__ == "__main__":
-    main()
+   main(sys.argv[1:])
