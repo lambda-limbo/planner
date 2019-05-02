@@ -1,6 +1,8 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
-import sys, getopt
+import sys
+import getopt
+from parser import parser as P
 
 def main(argv):
     domain = ''
@@ -27,6 +29,8 @@ def main(argv):
         usage()
         sys.exit()
     # call for pddl parser with the given arguments
+    d = P.Problem(domain, problem);
+    d.dump();
 
 def usage():
     print("Usage:\n")
