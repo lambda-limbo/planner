@@ -1,13 +1,16 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
-import sys, getopt
+import sys
+import getopt
+
 
 def main(argv):
     domain = ''
     problem = ''
     output = 'stdout'
     try:
-        opts, args = getopt.getopt(argv,"hd:p:o:",["domain=","problem=","output="])
+        opts, args = getopt.getopt(argv,"hd:p:o:", ["domain=", "problem=",
+                                                    "output="])
     except getopt.GetoptError as error:
         print("%s.\n" % str.capitalize(str(error)))
         usage()
@@ -22,11 +25,12 @@ def main(argv):
             problem = arg
         elif opt in ("-o", "--output"):
             output = arg
+
     if(not domain and problem or domain and not problem or not opts):
         print("A domain and a problem is required to execute.\n")
         usage()
         sys.exit()
-    # call for pddl parser with the given arguments
+
 
 def usage():
     print("Usage:\n")
@@ -36,5 +40,6 @@ def usage():
     print("\t-o --output <file>\t - \tDefines where to output the plan, " +
           "default is stdout")
 
+
 if __name__ == "__main__":
-   main(sys.argv[1:])
+    main(sys.argv[1:])
