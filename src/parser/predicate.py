@@ -82,15 +82,15 @@ class Predicate (object):
         """Return True iff two predicates are equal."""
 
         #if self.name != p.name:
-        #    print "prim: names don't match"
+        #    print("prim: names don't match"
         #if self.args != p.args:
-        #    print "args don't match"
-        #    print "*self*"
+        #    print("args don't match"
+        #    print("*self*"
         #    print self.args
-        #    print "*p*"
+        #    print("*p*"
         #    print p.args
         #if self.ground_args != p.ground_args:
-        #    print "ground_args don't match"
+        #    print("ground_args don't match"
 
         return self.name == p.name and \
                 self.args == p.args and \
