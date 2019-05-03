@@ -2,15 +2,17 @@
 
 import sys
 import getopt
+import parser
 
 
 def main(argv):
     domain = ''
     problem = ''
     output = 'stdout'
+
     try:
-        opts, args = getopt.getopt(argv,"hd:p:o:", ["domain=", "problem=",
-                                                    "output="])
+        opts, args = getopt.getopt(argv, "hd:p:o:", ["domain=", "problem=",
+                                                     "output="])
     except getopt.GetoptError as error:
         print("%s.\n" % str.capitalize(str(error)))
         usage()
@@ -31,8 +33,12 @@ def main(argv):
         usage()
         sys.exit()
 
-
     print("Solving plan %s for problem %s" % (domain, problem))
+
+    # Calling the parser to parse the files
+    d = parser.Problem(domain, problem)
+    d.dump()
+
 
 def usage():
     print("Usage:\n")
