@@ -2,7 +2,8 @@
 
 import sys
 import getopt
-import parser
+#from parser import parser
+from rmpop import planner as rmpop
 
 
 def main(argv):
@@ -36,8 +37,14 @@ def main(argv):
     print("Solving plan %s for problem %s" % (domain, problem))
 
     # Calling the parser to parse the files
-    d = parser.Problem(domain, problem)
-    d.dump()
+    #d = parser.Problem(domain, problem)
+    out = rmpop.Planner.solve(domain, problem, output)
+
+    if (output == "stdout"):
+        print(out)
+    else:
+        with open(output, 'w') as f:
+            f.write(out)
 
 
 def usage():
