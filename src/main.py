@@ -32,6 +32,8 @@ def main(argv):
         sys.exit()
 
 
+    print("Solving plan %s for problem %s" % (domain, problem))
+
 def usage():
     print("Usage:\n")
     print("\t-h --help\t\t - \tPrints this help")
