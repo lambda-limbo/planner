@@ -103,7 +103,8 @@
 	(:action recharge
 		:parameters (?r - robot ?c - charge ?l - location)
 		:precondition (and (at ?r ?l)
-						   (at ?c ?l))
+						   (at ?c ?l)
+						   (<= (battery-level ?r) 7))
 		:effect (and (increase (battery-level ?r) 10)
 					 (increase (total-cost) 3))
 	)
